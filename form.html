@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Form</title>
+    <style>
+        body {
+            background-image: url('background.jpg'); /* Change this to your image URL */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            background: green;
+            color: white;
+        }
+        .reset-btn {
+            background: orange;
+            color: white;
+        }
+        .apply-btn {
+            width: 100%;
+            margin-top: 20px;
+            background: red;
+            color: white;
+            text-align: center;
+            position: relative;
+            animation: move 3s linear infinite;
+        }
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(50px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
+            const formData = new FormData(event.target);
+            
+            let newPage = window.open("", "_blank");
+            let pageContent = `<html><head><title>Submitted Data</title></head><body>`;
+            pageContent += `<h2>Submitted Information</h2><ul>`;
+            
+            formData.forEach((value, key) => {
+                pageContent += `<li><strong>${key}:</strong> ${value}</li>`;
+            });
+            
+            pageContent += `</ul></body></html>`;
+            newPage.document.write(pageContent);
+            newPage.document.close();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form onsubmit="handleSubmit(event)">
+            <label>Profile Picture</label>
+            <input type="file" accept="image/*">
+            
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <label>Date of Birth</label>
+            <input type="date" name="dob" required>
+
+            <label>Address</label>
+            <textarea name="address" placeholder="Enter your address" required></textarea>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+
+            <label>Mother's Name</label>
+            <input type="text" name="mother_name" placeholder="Enter your mother's name" required>
+
+            <label>Father's Name</label>
+            <input type="text" name="father_name" placeholder="Enter your father's name" required>
+
+            <label>Father's Occupation</label>
+            <input type="text" name="father_occupation" placeholder="Enter your father's occupation">
+
+            <label>Mother's Occupation</label>
+            <input type="text" name="mother_occupation" placeholder="Enter your mother's occupation">
+
+            <label>Mother's Phone Number</label>
+            <input type="tel" name="mother_phone" placeholder="Enter mother's phone number" pattern="[0-9]{10}">
+
+            <label>Father's Phone Number</label>
+            <input type="tel" name="father_phone" placeholder="Enter father's phone number" pattern="[0-9]{10}">
+
+            <label>Currently Working</label>
+            <select name="working">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Hobbies</label>
+            <input type="text" name="hobbies" placeholder="Enter your hobbies">
+
+            <label>Skills</label>
+            <input type="text" name="skills" placeholder="Enter your skills">
+
+            <label>Mother Tongue</label>
+            <input type="text" name="mother_tongue" placeholder="Enter your mother tongue">
+
+            <label>Course</label>
+            <input type="text" name="course" placeholder="Enter your course name">
+
+            <label>Institute Name</label>
+            <input type="text" name="institute" placeholder="Enter your institute name">
+            
+            <div class="btn-container">
+                <button type="submit" class="submit-btn">Submit</button>
+                <button type="reset" class="reset-btn">Reset</button>
+            </div>
+            
+            <button type="button" class="apply-btn">Apply Immediately</button>
+        </form>
+    </div>
+</body>
+</html>
