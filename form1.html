@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            margin-bottom: 30px;
+        }
+        .form-container label {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .profile-header {
+            text-align: center;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+        .profile-header h1 {
+            font-size: 2.5em;
+            margin: 10px 0;
+        }
+        .profile-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .profile-info div {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        .profile-info div h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .profile-info div p {
+            font-size: 1.1em;
+        }
+
+        /* Job Ticker Styling (Scrolling from Left to Right) */
+        .job-ticker {
+            background-color: #333;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+        }
+        .job-ticker span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 10s linear infinite;
+        }
+        @keyframes ticker {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Job Ticker -->
+    <div class="job-ticker">
+        <span>🚀 Jobs are less, apply quickly! 🚀</span>
+    </div>
+
+    <div class="container">
+        <h1>User Profile Form</h1>
+        
+        <!-- Form for inputting profile details -->
+        <div class="form-container">
+            <form id="profileForm" onsubmit="return false;">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required placeholder="Enter your name">
+
+                <label for="course">Course:</label>
+                <input type="text" id="course" required placeholder="Enter your course">
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" required>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" required placeholder="Enter your address">
+
+                <label for="email">Email (Gmail only):</label>
+                <input type="email" id="email" required placeholder="Enter your email (example@gmail.com)">
+
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" required maxlength="10" pattern="\d{10}" title="Phone number must be 10 digits" placeholder="Enter your phone number">
+
+                <label for="motherName">Mother's Name:</label>
+                <input type="text" id="motherName" required placeholder="Enter your mother's name">
+
+                <label for="fatherName">Father's Name:</label>
+                <input type="text" id="fatherName" required placeholder="Enter your father's name">
+
+                <label for="motherOccupation">Mother's Occupation:</label>
+                <input type="text" id="motherOccupation" required placeholder="Enter your mother's occupation">
+
+                <label for="fatherOccupation">Father's Occupation:</label>
+                <input type="text" id="fatherOccupation" required placeholder="Enter your father's occupation">
+
+                <label for="motherContact">Mother's Contact Number:</label>
+                <input type="text" id="motherContact" required placeholder="Enter your mother's contact number">
+
+                <label for="fatherContact">Father's Contact Number:</label>
+                <input type="text" id="fatherContact" required placeholder="Enter your father's contact number">
+
+                <label for="siblings">Siblings:</label>
+                <input type="text" id="siblings" required placeholder="Enter your siblings">
+
+                <label for="motherTongue">Mother Tongue:</label>
+                <input type="text" id="motherTongue" required placeholder="Enter your mother tongue">
+
+                <label for="skills">Skills:</label>
+                <textarea id="skills" required placeholder="Enter your skills"></textarea>
+
+                <label for="hobbies">Hobbies:</label>
+                <textarea id="hobbies" required placeholder="Enter your hobbies"></textarea>
+
+                <label for="workingStatus">Working Status:</label>
+                <input type="text" id="workingStatus" required placeholder="Enter your working status">
+
+                <label for="profileImage">Upload Profile Image:</label>
+                <input type="file" id="profileImage" accept="image/*" onchange="previewImage(event)" required>
+
+                <button type="button" onclick="displayProfile()">Submit</button>
+                <button type="reset">Reset</button>
+            </form>
+        </div>
+
+        <!-- Display User Profile -->
+        <div id="profileDisplay" style="display:none;">
+            <div class="profile-header">
+                <img src="" alt="Profile Photo" id="profilePhoto">
+                <h1 id="profileName">John Doe</h1>
+                <p id="profileCourse">Course: Web Development</p>
+            </div>
+
+            <div class="profile-info">
+                <div>
+                    <h3>Personal Information</h3>
+                    <p><strong>Date of Birth:</strong> <span id="profileDob"></span></p>
+                    <p><strong>Address:</strong> <span id="profileAddress"></span></p>
+                    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="profilePhone"></span></p>
+                    <p><strong>Mother's Name:</strong> <span id="profileMotherName"></span></p>
+                    <p><strong>Father's Name:</strong> <span id="profileFatherName"></span></p>
+                </div>
+
+                <div>
+                    <h3>Family Information</h3>
+                    <p><strong>Mother's Occupation:</strong> <span id="profileMotherOccupation"></span></p>
+                    <p><strong>Father's Occupation:</strong> <span id="profileFatherOccupation"></span></p>
+                    <p><strong>Mother's Contact:</strong> <span id="profileMotherContact"></span></p>
+                    <p><strong>Father's Contact:</strong> <span id="profileFatherContact"></span></p>
+                    <p><strong>Siblings:</strong> <span id="profileSiblings"></span></p>
+                </div>
+
+                <div>
+                    <h3>Additional Information</h3>
+                    <p><strong>Mother Tongue:</strong> <span id="profileMotherTongue"></span></p>
+                    <p><strong>Skills:</strong> <span id="profileSkills"></span></p>
+                    <p><strong>Hobbies:</strong> <span id="profileHobbies"></span></p>
+                    <p><strong>Working Status:</strong> <span id="profileWorkingStatus"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function displayProfile() {
+            // Collect form data
+            const name = document.getElementById("name").value;
+            const course = document.getElementById("course").value;
+            const dob = document.getElementById("dob").value;
+            const address = document.getElementById("address").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const motherName = document.getElementById("motherName").value;
+            const fatherName = document.getElementById("fatherName").value;
+            const motherOccupation = document.getElementById("motherOccupation").value;
+            const fatherOccupation = document.getElementById("fatherOccupation").value;
+            const motherContact = document.getElementById("motherContact").value;
+            const fatherContact = document.getElementById("fatherContact").value;
+            const siblings = document.getElementById("siblings").value;
+            const motherTongue = document.getElementById("motherTongue").value;
+            const skills = document.getElementById("skills").value;
+            const hobbies = document.getElementById("hobbies").value;
+            const workingStatus = document.getElementById("workingStatus").value;
+
+            // Get the uploaded image
+            const profileImage = document.getElementById("profileImage").files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Update profile display with the entered data
+                document.getElementById("profilePhoto").src = e.target.result;
+                document.getElementById("profileName").textContent = name;
+                document.getElementById("profileCourse").textContent = "Course: " + course;
+                document.getElementById("profileDob").textContent = dob;
+                document.getElementById("profileAddress").textContent = address;
+                document.getElementById("profileEmail").textContent = email;
+                document.getElementById("profilePhone").textContent = phone;
+                document.getElementById("profileMotherName").textContent = motherName;
+                document.getElementById("profileFatherName").textContent = fatherName;
+                document.getElementById("profileMotherOccupation").textContent = motherOccupation;
+                document.getElementById("profileFatherOccupation").textContent = fatherOccupation;
+                document.getElementById("profileMotherContact").textContent = motherContact;
+                document.getElementById("profileFatherContact").textContent = fatherContact;
+                document.getElementById("profileSiblings").textContent = siblings;
+                document.getElementById("profileMotherTongue").textContent = motherTongue;
+                document.getElementById("profileSkills").textContent = skills;
+                document.getElementById("profileHobbies").textContent = hobbies;
+                document.getElementById("profileWorkingStatus").textContent = workingStatus;
+
+                // Hide the form and show the profile
+                document.getElementById("profileDisplay").style.display = "block";
+                document.querySelector(".form-container").style.display = "none";
+            };
+            reader.readAsDataURL(profileImage);
+        }
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profilePhoto');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+</body>
+</html>
